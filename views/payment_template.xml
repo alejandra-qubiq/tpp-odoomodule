@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Tpp Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position='inside'>
+                <group attrs="{'invisible': [('code', '!=', 'tpp')]}">
+                    <field name="client_id"
+                           string="ID cliente"
+                           attrs="{'required': [('code', '=', 'tpp'), ('state', '!=', 'disabled')]}"/>
+					 <field name="client_secret"
+                           string="Cliente secret"
+                           attrs="{'required': [('code', '=', 'tpp'), ('state', '!=', 'disabled')]}"/>	   
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
