@@ -8,10 +8,10 @@
             <group name="provider_credentials" position='inside'>
                 <group attrs="{'invisible': [('code', '!=', 'tpp')]}">
                     <field name="client_id"
-                           string="ID cliente"
+                           string="Client Id"
                            attrs="{'required': [('code', '=', 'tpp'), ('state', '!=', 'disabled')]}"/>
 					 <field name="client_secret"
-                           string="Cliente secret"
+                           string="Client Secret"
                            attrs="{'required': [('code', '=', 'tpp'), ('state', '!=', 'disabled')]}"/>	   
                 </group>
             </group>

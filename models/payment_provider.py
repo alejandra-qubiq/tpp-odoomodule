@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #############################################################################
 #
-#   Adrian Gonzalalez Padron.
-#   agonzalezpa0191@gmail.com
+#   TropiPay.
+#   soporte@tropipay.com
 #
 #
 #############################################################################
@@ -18,8 +18,8 @@ class PaymentProvider(models.Model):
         selection_add=[('tpp', "(tpp) Tropipay")],
         ondelete={'tpp': 'set default'}
     )
-    client_id = fields.Char(string='ID_Cliente')
-    client_secret = fields.Char(string='Cliente_Secret')
+    client_id = fields.Char(string='ClientId')
+    client_secret = fields.Char(string='ClientSecret')
 
     @api.model
     def _get_payment_method_information(self):

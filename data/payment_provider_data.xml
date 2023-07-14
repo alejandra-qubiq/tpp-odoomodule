@@ -3,7 +3,7 @@
         <field name="name">Tpp</field>
         <field name="code">tpp</field>
         <field name="image_128" type="base64"
-               file="tpp_payment_gateway/static/description/icon.jpg"/>
+               file="tpp_payment_gateway/static/description/tropipaylogo.png"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="redirect_form_view_id" ref="redirect_form"/>
     </record>

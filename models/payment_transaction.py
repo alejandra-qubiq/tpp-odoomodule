@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 #############################################################################
 #
-#   Adrian Gonzalalez Padron.
-#   agonzalezpa0191@gmail.com
+#   TropiPay.
+#   soporte@tropipay.com
 #
 #
 #############################################################################
 
+import hashlib
 import logging
+import pprint
 
 from werkzeug import urls
 
@@ -65,14 +67,15 @@ class PaymentTransaction(models.Model):
         amount = self.amount
         ahora=datetime.now()
         fecha = ahora.strftime("%Y-%m-%d")
-       
+        _logger.info("Mostrando country:\n%s",
+                     self.partner_id.country_id.code)
         _logger.info(f' La fecha que viene{fecha}')
         payload = {
             "reference": self.reference,
-            "concept": "Compra en la web DelChef",
+            "concept": "Compra en la web",
             "favorite": False,
             "description": "Compra de productos en la tienda en linea",
-            "amount": amount * 100,  # float(f"{self.amount}00"), #str(self.amount)+"00",
+            "amount": round(amount * 100, 2),  # float(f"{self.amount}00"), #str(self.amount)+"00",
             "currency": self.currency_id.name,
             "singleUse": True,
             "reasonId": 34,
@@ -91,7 +94,7 @@ class PaymentTransaction(models.Model):
                 "address": self.partner_address,
                 "phone": self.partner_phone,
                 "email": self.partner_email,
-                "countryId": 1,
+                "countryIso": self.partner_id.country_id.code,
                 "termsAndConditions": "true"
             }
         }
@@ -102,7 +105,8 @@ class PaymentTransaction(models.Model):
         _logger.info(response)
         _logger.info(response.json())
         rendering_values = {
-            'api_url': response.json()["shortUrl"]
+            'api_url': response.json()["shortUrl"],
+            'payment_url': response.json()["paymentUrl"],
         }
         return rendering_values
 
@@ -111,6 +115,9 @@ class PaymentTransaction(models.Model):
         """Getting  payment status from tropipay"""
         #notification_data_str = notification_data.decode('utf-8')
         # Deserialize the JSON string
+        tx = super()._get_tx_from_notification_data(provider_code, notification_data)
+        if provider_code != 'tpp' or len(tx) == 1:
+            return tx
         notification_data_dict = json.loads(notification_data)
         _logger.info("asdfasf: %s", notification_data_dict)
 
@@ -118,10 +125,25 @@ class PaymentTransaction(models.Model):
         payment_status = notification_data_dict['data']['state']
         _logger.info("payment_status: %s", payment_status)
         # payment_status = notification_data['state'] #5 cuando el pago se realizo correctamente
-        tx = super()._get_tx_from_notification_data(provider_code, notification_data)
-        if provider_code != 'tpp' or len(tx) == 1:
-            return tx
+        _logger.info("mi clientid: %s", self.env['payment.provider'].search([('code', '=', 'tpp')]).client_id)
+        clientid = self.env['payment.provider'].search([('code', '=', 'tpp')]).client_id
+        clientsecret = self.env['payment.provider'].search([('code', '=', 'tpp')]).client_secret
+        bankOrderCode = notification_data_dict['data']['bankOrderCode']
+        originalCurrencyAmount = notification_data_dict['data']['originalCurrencyAmount']
+        # Concatenar los valores
+        data = "{}{}{}{}".format(bankOrderCode,clientid,clientsecret,originalCurrencyAmount)
+
+        # Calcular la firma utilizando SHA256
+        signature = hashlib.sha256(data.encode()).hexdigest()
+        _logger.info("misignature: {}".format(signature))
+        _logger.info("Firma remota: {}, Firma local: {}".format(notification_data_dict['data']['signaturev2'],signature))
         reference = notification_data_dict['data']['reference']
+        if signature != notification_data_dict['data']['signaturev2']:
+            raise ValidationError(
+                "tpp: " + _(
+                    "Invalid Signature %s.",
+                    reference)
+            )
         _logger.info("reference: %s", reference)
         tx = self.search(
             [

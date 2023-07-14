@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #############################################################################
 #
-#   Adrian Gonzalalez Padron.
-#   agonzalezpa0191@gmail.com
+#   TropiPay.
+#   soporte@tropipay.com
 #   
 #
 #############################################################################
@@ -13,10 +13,10 @@
     'version': '1.2.0.0.0',
     'description': """Tropipay Payment Gateway V1.2""",
     'Summary': """Tropipay Payment Gateway V1.2""",
-    'author': "Adrian Gonzalez",
-    'company': 'Dargoz Group',
-    'maintainer': 'Adrian Gonzalez',
-    'website': "https://www.dargoz.com",
+    'author': "TropiPay",
+    'company': 'TropiPay',
+    'maintainer': 'Tropipay',
+    'website': "https://www.tropipay.com",
     'depends': ['payment', 'account', 'website', 'website_sale'],
     'data': [
         'views/payment_template.xml',
@@ -26,7 +26,7 @@
     ],
     'post_init_hook': 'post_init_hook',
     'uninstall_hook': 'uninstall_hook',
-    'images': ['static/description/banner.jpg'],
+    'images': ['static/description/tropipaylogo.png'],
     'license': 'LGPL-3',
     'installable': True,
     'application': True,
