@@ -1,4 +1,4 @@
-MyFatoorah Payment Gateway
+TropiPay Payment Gateway
 ===========================
 * TropiPay Payment Gateway For Odoo 16
 
