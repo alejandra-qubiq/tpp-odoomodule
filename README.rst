@@ -1,6 +1,6 @@
 MyFatoorah Payment Gateway
 ===========================
-* MyFatoorah Payment Gateway For Odoo 16
+* TropiPay Payment Gateway For Odoo 16
 
 Installation
 ============
@@ -14,17 +14,17 @@ General Public License, Version 3 (LGPL v3).
 
 Company
 -------
-* 'Cybrosys Techno Solutions <https://cybrosys.com/>`__
+* 'TropiPay Payment Solutions <https://www.tropipay.com/>`__
 
 Credits
 -------
 * Developer:
-(v16) Swaroop N P @ Cybrosys
+(v16) developers@tropipay.com
 
 
 Contacts
 --------
-* Mail Contact : odoo@cybrosys.com
+* Mail Contact : developers@tropipay.com
 
 Bug Tracker
 -----------
@@ -32,9 +32,9 @@ Bugs are tracked on GitHub Issues. In case of trouble, please check there if you
 
 Maintainer
 ==========
-This module is maintained by Cybrosys Technologies.
+This module is maintained by TropiPay Team.
 
-For support and more information, please visit https://www.cybrosys.com
+For support and more information, please visit https://www.tropipay.com
 
 Further information
 ===================
