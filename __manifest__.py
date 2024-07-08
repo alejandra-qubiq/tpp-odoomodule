@@ -10,9 +10,9 @@
 {
     'name': 'Tropipay Payment Gateway',
     'category': 'Accounting/Payment Acquirers',
-    'version': '1.2.0.0.0',
-    'description': """Tropipay Payment Gateway V1.2""",
-    'Summary': """Tropipay Payment Gateway V1.2""",
+    'version': '1.3.0.0.0',
+    'description': """Tropipay Payment Gateway V1.3""",
+    'Summary': """Tropipay Payment Gateway V1.3""",
     'author': "TropiPay",
     'company': 'TropiPay',
     'maintainer': 'Tropipay',

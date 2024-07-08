@@ -70,6 +70,11 @@ class PaymentTransaction(models.Model):
         _logger.info("Mostrando country:\n%s",
                      self.partner_id.country_id.code)
         _logger.info(f' La fecha que viene{fecha}')
+        # Extraer first_name y last_name de partner_name
+        name_parts = self.partner_name.split()
+        first_name = name_parts[0] if name_parts else ''
+        last_name = ' '.join(name_parts[1:]) if len(name_parts) > 1 else '.'
+
         payload = {
             "reference": self.reference,
             "concept": "Compra en la web",
@@ -89,13 +94,15 @@ class PaymentTransaction(models.Model):
             "serviceDate": fecha,
             "directPayment": True,
             "client": {
-                "name": self.partner_name,
-                "lastName": ".",
+                "name": first_name,
+                "lastName": last_name,
                 "address": self.partner_address,
                 "phone": self.partner_phone,
                 "email": self.partner_email,
                 "countryIso": self.partner_id.country_id.code,
-                "termsAndConditions": "true"
+                "termsAndConditions": "true",
+                "postCode": self.partner_id.zip,
+                "city": self.partner_id.city
             }
         }
         _logger.info(endpoint_url)
