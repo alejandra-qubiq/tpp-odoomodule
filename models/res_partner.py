@@ -29,8 +29,6 @@ class ResCompany(models.Model):
         for record in self:
             if not record.website_id:
                 continue
-            if self.env.context.get('skip_tropipay_validation', False):
-                continue
 
             tropipay_payment_provider = self.env['payment.provider'].search([
                 ('code', '=', 'tpp'),
